@@ -23,4 +23,4 @@ spec:
       volumes:
       - name: html-volume
         hostPath:
-          path: /www
+          path: /var/jenkins_home/workspace/kubernetes-deploy/www
