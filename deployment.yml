@@ -22,5 +22,16 @@ spec:
           mountPath: /usr/share/nginx/html
       volumes:
       - name: html-volume
-        hostPath:
-          path: /var/jenkins_home/workspace/kubernetes-deploy/www
+        persistentVolumeClaim:
+          claimName: jenkins-html-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: jenkins-html-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
