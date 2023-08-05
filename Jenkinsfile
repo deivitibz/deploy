@@ -28,7 +28,7 @@ pipeline {
             steps {
                 //kubeconfig(credentialsId: '0062e1c3-3342-44ac-a96f-e9462f88fc1c', serverUrl: 'https://vmi320685.contaboserver.net:6443') {
                     // some block
-                    sh "kubectl get node"
+                    sh "kubectl apply -f deployment.yml"
                 //}
             }
         }
