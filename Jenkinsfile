@@ -26,10 +26,19 @@ pipeline {
         
         stage('Deploy to Kubernetes') {
             steps {
-                //kubeconfig(credentialsId: '0062e1c3-3342-44ac-a96f-e9462f88fc1c', serverUrl: 'https://vmi320685.contaboserver.net:6443') {
-                    // some block
+                script {
+                    def nginxDeploymentName = 'nginx'
+                    
+                    //kubeconfig(credentialsId: '0062e1c3-3342-44ac-a96f-e9462f88fc1c', serverUrl: 'https://vmi320685.contaboserver.net:6443') {
                     sh "kubectl apply -f deployment.yml"
+                    
+                    def podName = sh(script: "kubectl get pods -l app=${nginxDeploymentName} -o jsonpath='{.items[0].metadata.name}'", returnStdout: true).trim()
+
+                    //sh 'cp -r www ${nginxDeploymentName}:/usr/share/nginx/html'
+                    sh "kubectl cp www/* ${podName}:/usr/share/nginx/html"
+        
                 //}
+                }
             }
         }
     }
